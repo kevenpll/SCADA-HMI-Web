@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Banco de Dados - SCADA{% endblock %}
+{% block page_title %}Eventos do Sistema (Datalogger){% endblock %}
+
+{% block content %}
+<div class="card table-card">
+    <div class="card-header space-between">
+        <div class="header-info">
+            <h3><i class="ph ph-list-dashes"></i> Registros Recentes</h3>
+            <span class="subtitle">Mostrando últimos eventos do SQLite Datalogger</span>
+        </div>
+        <div class="actions">
+            <a href="{{ url_for('routes.export_csv') }}" class="btn btn-success">
+                <i class="ph ph-download-simple"></i> Exportar CSV de Engenharia
+            </a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Reg ID</th>
+                    <th>Data / Hora</th>
+                    <th>Máquina ID</th>
+                    <th>Temperatura</th>
+                    <th>Pressão</th>
+                    <th>Velocidade</th>
+                    <th>Status de Borda</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr class="{% if log.is_alarm %}tr-critical{% endif %}">
+                    <td>#{{ log.id }}</td>
+                    <td class="td-time">{{ log.timestamp }}</td>
+                    <td><strong>MÁQ-{{ "%02d"|format(log.machine_id) }}</strong></td>
+                    <td class="font-mono">{{ "%.1f"|format(log.temperature) }} °C</td>
+                    <td class="font-mono">{{ "%.2f"|format(log.pressure) }} Bar</td>
+                    <td class="font-mono">{{ "%.1f"|format(log.speed) }} RPM</td>
+                    <td>
+                        {% if log.status == 'ONLINE' %}
+                            <span class="badge b-online">Operando</span>
+                        {% elif log.status == 'WARNING' %}
+                            <span class="badge b-warning">Atenção</span>
+                        {% else %}
+                            <span class="badge b-alarm">Falha Crítica</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7" class="empty-state">Nenhum registro encontrado no banco de dados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

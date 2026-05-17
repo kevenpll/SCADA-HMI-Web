@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - SCADA Web{% endblock %}
+{% block header_title %}Visão Geral da Máquina{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+    
+    <!-- Status Card -->
+    <div class="card status-card">
+        <h3>Status da Máquina</h3>
+        <div class="status-display" id="machine-status-display">
+            <div class="status-circle" id="status-circle"></div>
+            <h2 id="status-text">CARREGANDO...</h2>
+        </div>
+    </div>
+
+    <!-- Cards de Indicadores -->
+    <div class="indicators-container">
+        <!-- Temperatura -->
+        <div class="card indicator-card">
+            <div class="indicator-header">
+                <h3>Temperatura</h3>
+                <span class="unit">°C</span>
+            </div>
+            <div class="indicator-value">
+                <h2 id="temp-val">--</h2>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="temp-bar" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- Pressão -->
+        <div class="card indicator-card">
+            <div class="indicator-header">
+                <h3>Pressão</h3>
+                <span class="unit">Bar</span>
+            </div>
+            <div class="indicator-value">
+                <h2 id="press-val">--</h2>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="press-bar" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- Velocidade -->
+        <div class="card indicator-card">
+            <div class="indicator-header">
+                <h3>Velocidade</h3>
+                <span class="unit">RPM</span>
+            </div>
+            <div class="indicator-value">
+                <h2 id="speed-val">--</h2>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="speed-bar" style="width: 0%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alarmes Ativos -->
+    <div class="card alarms-card">
+        <h3>Alarmes Ativos</h3>
+        <div class="alarms-list" id="alarms-list">
+            <p class="no-alarms">Nenhum alarme no momento.</p>
+        </div>
+    </div>
+
+    <!-- Gráfico -->
+    <div class="card chart-card">
+        <div class="chart-header">
+            <h3>Tendência de Variáveis (Tempo Real)</h3>
+        </div>
+        <div class="chart-container">
+            <canvas id="realtimeChart"></canvas>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

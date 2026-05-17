@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Alarmes - SCADA{% endblock %}
+{% block page_title %}Gerenciador de Alarmes Críticos{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <!-- Painel de Resumo -->
+    <div class="machines-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 20px;">
+        <div class="card">
+            <h3 style="color: var(--status-alarm); font-size: 1.5rem;"><i class="ph-fill ph-warning"></i> Monitoramento</h3>
+            <p style="color: var(--text-muted); margin-top: 10px;">Visualizando o log histórico de anomalias registradas pelo sistema de Datalogger.</p>
+        </div>
+    </div>
+
+    <!-- Tabela de Alarmes -->
+    <div class="card table-card">
+        <div class="card-header space-between">
+            <div class="header-info">
+                <h3><i class="ph ph-bell-ringing"></i> Histórico de Falhas</h3>
+                <span class="subtitle">Registros onde parâmetros excederam os limites de operação.</span>
+            </div>
+            <div class="actions">
+                <a href="{{ url_for('routes.export_csv') }}" class="btn btn-primary">
+                    <i class="ph ph-file-csv"></i> Baixar Relatório Completo
+                </a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Data / Hora</th>
+                        <th>Máquina ID</th>
+                        <th>Causa do Alarme (Valores Registrados)</th>
+                        <th>Classificação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                    <tr class="tr-critical">
+                        <td class="td-time">{{ log.timestamp }}</td>
+                        <td><strong>MÁQ-{{ "%02d"|format(log.machine_id) }}</strong></td>
+                        <td class="font-mono">Temp: {{ "%.1f"|format(log.temperature) }}°C | Pressão: {{ "%.2f"|format(log.pressure) }} Bar | Vel: {{ "%.1f"|format(log.speed) }} RPM</td>
+                        <td>
+                            <span class="badge b-alarm">Falha (Intervenção Necessária)</span>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="empty-state">Nenhum alarme crítico registrado no histórico recente. A planta está operando com estabilidade.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

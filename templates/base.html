@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}HMI Server | SCADA{% endblock %}</title>
+    
+    <!-- Fonte Google: Inter (Corporativa/Moderna) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons (Ícones Premium) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="scada-body">
+    <!-- Overlay de Loading Inicial -->
+    <div id="page-loader" class="page-loader">
+        <i class="ph ph-spinner-gap spinner"></i>
+        <span>Inicializando HMI...</span>
+    </div>
+
+    <div class="app-layout">
+        <!-- Sidebar de Navegação Profissional -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="ph-fill ph-cpu brand-icon"></i>
+                <div class="brand-text">
+                    <h1>SCADA</h1>
+                    <span>Enterprise HMI</span>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <p class="nav-label">MONITORAMENTO</p>
+                <a href="{{ url_for('routes.dashboard') }}" class="nav-item {% if request.endpoint == 'routes.dashboard' %}active{% endif %}">
+                    <i class="ph ph-squares-four"></i> Planta Visão Geral
+                </a>
+                
+                <p class="nav-label">DADOS</p>
+                <a href="{{ url_for('routes.history') }}" class="nav-item {% if request.endpoint == 'routes.history' %}active{% endif %}">
+                    <i class="ph ph-database"></i> Histórico / Eventos
+                </a>
+                <a href="{{ url_for('routes.alarms') }}" class="nav-item {% if request.endpoint == 'routes.alarms' %}active{% endif %}">
+                    <i class="ph ph-warning-circle"></i> Gerenciador de Alarmes
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar"><i class="ph ph-user"></i></div>
+                    <div class="user-details">
+                        <span class="user-name">Engenharia</span>
+                        <span class="user-role">Admin</span>
+                    </div>
+                </div>
+                <a href="{{ url_for('routes.logout') }}" class="btn-icon" title="Sair do Sistema">
+                    <i class="ph ph-sign-out"></i>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Container Principal -->
+        <main class="main-content">
+            <!-- Barra de Status Superior -->
+            <header class="topbar">
+                <div class="page-title">
+                    <h2>{% block page_title %}Visão da Planta{% endblock %}</h2>
+                </div>
+                
+                <div class="topbar-actions">
+                    <div class="connection-status" id="server-connection">
+                        <i class="ph-fill ph-wifi-high"></i>
+                        <span id="conn-text">Conectado ao Servidor PLC</span>
+                    </div>
+                    <div class="clock" id="system-clock">--:--:--</div>
+                </div>
+            </header>
+
+            <!-- Área de Conteúdo Dinâmico -->
+            <div class="content-area">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts Base -->
+    <script>
+        // Relógio do Sistema (HMI Clássico)
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('system-clock').innerText = now.toLocaleTimeString('pt-BR');
+        }, 1000);
+
+        // Remove o loader assim que o DOM carregar
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('page-loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('page-loader').style.display = 'none', 300);
+            }, 500); // pequeno delay para transição suave
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

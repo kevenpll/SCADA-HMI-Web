@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Planta Geral - SCADA{% endblock %}
+{% block page_title %}Planta Industrial ({{ num_machines }} Máquinas){% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    
+    <!-- Painel de Gráficos (Agregador) -->
+    <div class="analytics-panel">
+        <div class="card chart-card">
+            <div class="card-header">
+                <h3><i class="ph ph-trend-up"></i> Tendência Geral (Planta)</h3>
+                <div class="chart-legend">Média de Temperatura das Extrusoras</div>
+            </div>
+            <div class="chart-body">
+                <canvas id="plantChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid de Máquinas Simultâneas -->
+    <div class="machines-grid" id="machines-container">
+        <!-- Skeleton Loaders iniciais (Simulando 10 espaços enquanto não carrega) -->
+        {% for i in range(10) %}
+        <div class="machine-card skeleton">
+            <div class="mc-header">
+                <div class="skeleton-box title-sk"></div>
+                <div class="skeleton-box status-sk"></div>
+            </div>
+            <div class="mc-body">
+                <div class="skeleton-box val-sk"></div>
+                <div class="skeleton-box val-sk"></div>
+                <div class="skeleton-box val-sk"></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<!-- Template HTML nativo para o Card de Máquina criado via JS -->
+<template id="machine-card-template">
+    <div class="machine-card" data-id="">
+        <div class="mc-header">
+            <h3 class="mc-name"><i class="ph-fill ph-engine"></i> <span class="name-text">Nome</span></h3>
+            <div class="mc-status badge"><span class="status-text">OFFLINE</span></div>
+        </div>
+        
+        <div class="mc-metrics">
+            <div class="metric">
+                <span class="m-label">Temperatura</span>
+                <div class="m-data">
+                    <span class="m-val temp-val">--</span> <span class="m-unit">°C</span>
+                </div>
+                <div class="m-bar"><div class="m-fill temp-fill"></div></div>
+            </div>
+            
+            <div class="metric">
+                <span class="m-label">Pressão</span>
+                <div class="m-data">
+                    <span class="m-val press-val">--</span> <span class="m-unit">Bar</span>
+                </div>
+                <div class="m-bar"><div class="m-fill press-fill"></div></div>
+            </div>
+            
+            <div class="metric">
+                <span class="m-label">Velocidade</span>
+                <div class="m-data">
+                    <span class="m-val speed-val">--</span> <span class="m-unit">RPM</span>
+                </div>
+                <div class="m-bar"><div class="m-fill speed-fill"></div></div>
+            </div>
+        </div>
+        
+        <div class="mc-footer alarms-container">
+            <!-- Alarmes são injetados aqui -->
+        </div>
+    </div>
+</template>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}
