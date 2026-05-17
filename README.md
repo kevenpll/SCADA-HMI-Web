@@ -31,9 +31,11 @@ Uma **Interface Homem-Máquina (HMI) Web** desenvolvida para simular e monitorar
 
 ## 📸 Interface
 
-| Visão da Planta | Gerenciador de Falhas |
+| Visão da Planta (Real-Time) | Eventos e Histórico (DataLogger) |
 | :---: | :---: |
-| ➡️ *[Substitua pelo seu Print do Dashboard]* | ➡️ *[Substitua pelo seu Print de Alarmes]* |
+| ![Dashboard](docs/images/dashboard.png) | ![Logs](docs/images/logs.png) |
+| **Gerenciador de Alarmes Críticos** | **Acesso Restrito (Login)** |
+| ![Alarmes](docs/images/alarms.png) | ![Login](docs/images/login.png) |
 
 ---
 <div align="center">
