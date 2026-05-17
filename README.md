@@ -11,7 +11,7 @@
 
 ## 🌐 Demonstração Ao Vivo
 
-👉 **[Acessar o SCADA Web - Live Demo](https://seu-link-da-vercel-aqui.vercel.app)**
+👉 **[Acessar o SCADA Web - Live Demo](https://scada-hmi-web.vercel.app/)**
 
 > 🔑 **Login:** `admin` | **Senha:** `admin`
 
