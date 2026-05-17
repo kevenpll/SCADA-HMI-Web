@@ -17,5 +17,5 @@ def create_app():
     app.register_blueprint(routes_bp)
     app.register_blueprint(errors_bp)
     
-    sys_logger.info(f"Instância do Flask criada no modo {Config.FLASK_ENV}")
+    sys_logger.info("Instância do Flask criada (Serverless/Vercel Support Ativo)")
     return app
