@@ -73,6 +73,13 @@ def alarms():
 def get_all_status():
     """Retorna o estado de todas as máquinas cadastradas no SCADA."""
     try:
+        from config import Config
+        # WORKAROUND VERCEL: Se estiver Serverless, Thread de fundo morre. 
+        # Avançamos a simulação "on demand" a cada poll do frontend.
+        if Config.IS_VERCEL:
+            for machine_id, state in simulator.machines.items():
+                simulator._update_machine(state)
+                
         return jsonify({
             'success': True,
             'machines': list(simulator.get_all_states().values())

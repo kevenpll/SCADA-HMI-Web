@@ -1,15 +1,19 @@
 import sqlite3
 from datetime import datetime
+import os
+import threading
 from config import Config
 from services.logger import sys_logger
 
 class DatabaseManager:
     """
-    Gerenciador de Conexão com o Banco de Dados SQLite.
-    Suporta o armazenamento de múltiplas máquinas simultaneamente.
+    Gerenciador corporativo para o SQLite (DataLogger).
+    Usa Locks para garantir Thread-Safety no caso de alta concorrência na escrita.
     """
-    def __init__(self, db_path=Config.DB_PATH):
-        self.db_path = db_path
+    def __init__(self):
+        # Utiliza o caminho definido na configuração (suporta Vercel /tmp)
+        self.db_path = Config.DB_PATH
+        self.lock = threading.Lock()
 
     def get_connection(self):
         """Retorna uma conexão Thread-Safe."""
