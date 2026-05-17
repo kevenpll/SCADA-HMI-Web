@@ -31,13 +31,13 @@ Uma **Interface Homem-Máquina (HMI) Web** desenvolvida para simular e monitorar
 
 ## 📸 Interface
 
-| Visão da Planta (Real-Time) | Eventos e Histórico (DataLogger) |
+| Eventos e Histórico (DataLogger) | Gerenciador de Alarmes Críticos |
 | :---: | :---: |
-| ![Dashboard](docs/images/dashboard.png) | ![Logs](docs/images/logs.png) |
-| **Gerenciador de Alarmes Críticos** | **Acesso Restrito (Login)** |
-| ![Alarmes](docs/images/alarms.png) | ![Login](docs/images/login.png) |
+| ![Logs](docs/images/logs.png) | ![Alarmes](docs/images/alarms.png) |
+| **Acesso Restrito (Login)** | **Visão da Planta (Real-Time)** |
+| ![Login](docs/images/login.png) | ![Dashboard](docs/images/dashboard.png) |
 
 ---
 <div align="center">
-  <i>Desenvolvido por [Seu Nome] - Engenharia de Automação</i>
+  <i>Desenvolvido por Keven Pereira</i>
 </div>
