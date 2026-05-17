@@ -33,7 +33,7 @@ Uma **Interface Homem-Máquina (HMI) Web** desenvolvida para simular e monitorar
 
 | Visão da Planta | Gerenciador de Falhas |
 | :---: | :---: |
-| <img src="https://via.placeholder.com/600x350.png?text=Print+do+Dashboard" alt="Dashboard"> | <img src="https://via.placeholder.com/600x350.png?text=Print+dos+Alarmes" alt="Alarmes"> |
+| ➡️ *[Substitua pelo seu Print do Dashboard]* | ➡️ *[Substitua pelo seu Print de Alarmes]* |
 
 ---
 <div align="center">
